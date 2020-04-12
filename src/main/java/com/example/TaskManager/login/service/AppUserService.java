@@ -1,0 +1,25 @@
+package com.example.TaskManager.login.service;
+
+import com.example.TaskManager.login.entity.AppUser;
+import com.example.TaskManager.login.repo.AppUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+public class AppUserService {
+
+    @Autowired
+    private AppUserRepository appUserRepository;
+
+    public AppUser fetchAppUserByEmail(String email) {
+        return appUserRepository.findByEmail(email);
+    }
+
+    /*public AppUser addUser(AppUser appUser) {
+        return appUserRepository.save(appUser);
+    }
+
+    public List<AppUser>getAllUser() {
+        return appUserRepository.fetchAllUser();
+    }*/
+}
