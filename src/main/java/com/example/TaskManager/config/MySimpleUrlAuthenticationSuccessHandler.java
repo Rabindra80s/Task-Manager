@@ -7,7 +7,6 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,31 +15,41 @@ import java.util.Collection;
 
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response, Authentication authentication)
+            throws IOException {
+
         handle(request, response, authentication);
         clearAuthenticationAttributes(request);
     }
 
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    protected void handle(HttpServletRequest request,
+                          HttpServletResponse response, Authentication authentication)
+            throws IOException {
+
         String targetUrl = determineTargetUrl(authentication);
-        if(response.isCommitted()) {
+
+        if (response.isCommitted()) {
             return;
         }
+
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
     protected String determineTargetUrl(Authentication authentication) {
         boolean isUser = false;
         boolean isAdmin = false;
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for(GrantedAuthority grantedAuthority : authorities) {
-            if(grantedAuthority.getAuthority().equals("USER")) {
+        Collection<? extends GrantedAuthority> authorities
+                = authentication.getAuthorities();
+        for (GrantedAuthority grantedAuthority : authorities) {
+            if (grantedAuthority.getAuthority().equals("USER")) {
                 isUser = true;
                 break;
-            } else if(grantedAuthority.getAuthority().equals("ADMIN")) {
+            } else if (grantedAuthority.getAuthority().equals("ADMIN")) {
                 isAdmin = true;
                 break;
             }
@@ -48,7 +57,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
         if (isUser) {
             return "/user";
-        } else if(isAdmin) {
+        } else if (isAdmin) {
             return "/admin";
         } else {
             throw new IllegalStateException();
@@ -57,7 +66,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
     protected void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if(session == null) {
+        if (session == null) {
             return;
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);

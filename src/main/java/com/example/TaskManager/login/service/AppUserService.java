@@ -16,4 +16,8 @@ public class AppUserService {
 public AppUser fetchAppUserByEmail(String email) {
     return appUserRepository.findByEmail(email);
 }
+
+    public AppUser addUser(AppUser appUser) {
+    return appUserRepository.save(appUser);
+    }
 }

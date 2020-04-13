@@ -15,5 +15,6 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer> {
 
 //    @Query(value="select * from tbl_user a where a.role='USER'", nativeQuery = true) //--> mySQL Workbench
     @Query(value="select appUser from AppUser appUser where appUser.role='USER'") //--> Hibernate
+
     List<AppUser> fetchAllUser();
 }
