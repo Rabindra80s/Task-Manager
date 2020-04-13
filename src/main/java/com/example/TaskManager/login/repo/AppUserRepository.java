@@ -12,9 +12,7 @@ public interface AppUserRepository extends JpaRepository<AppUser, Integer> {
 
     AppUser findByEmail(String email);
 
-
-//    @Query(value="select * from tbl_user a where a.role='USER'", nativeQuery = true) //--> mySQL Workbench
-    @Query(value="select appUser from AppUser appUser where appUser.role='USER'") //--> Hibernate
-
+    //    @Query(value="SELECT * FROM tbl_users a WHERE a.role='USER'", nativeQuery = true) //mySQL
+    @Query(value="SELECT appUser FROM AppUser appUser WHERE appUser.role='USER'") //hibernate
     List<AppUser> fetchAllUser();
 }

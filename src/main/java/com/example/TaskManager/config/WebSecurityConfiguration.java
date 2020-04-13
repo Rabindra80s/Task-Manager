@@ -30,7 +30,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/templates/**");
+                .antMatchers("static/**", "/resources/**", "/templates/**");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/", "/login", "/register", "/admin/create-task", "check-email").permitAll()
+                .antMatchers("/", "/login", "/register", "/admin/create-task", "/check-email").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -58,8 +58,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling();
     }
 
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
@@ -67,5 +69,4 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public MySimpleUrlAuthenticationSuccessHandler mySimpleUrlAuthenticationSuccessHandler() {
         return new MySimpleUrlAuthenticationSuccessHandler();
     }
-
 }

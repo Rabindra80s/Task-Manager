@@ -24,7 +24,7 @@ public class AppUserDetailService implements UserDetailsService {
 
         AppUser appUser = appUserService.fetchAppUserByEmail(email);
 
-        List<GrantedAuthority>authorities = new ArrayList<>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(appUser.getRole()));
 
         return new User(

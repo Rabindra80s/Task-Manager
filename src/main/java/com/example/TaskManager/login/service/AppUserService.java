@@ -10,14 +10,18 @@ import java.util.List;
 @Service
 public class AppUserService {
 
-@Autowired
+    @Autowired
     private AppUserRepository appUserRepository;
 
-public AppUser fetchAppUserByEmail(String email) {
-    return appUserRepository.findByEmail(email);
-}
+    public AppUser fetchAppUserByEmail(String email) {
+        return appUserRepository.findByEmail(email);
+    }
 
     public AppUser addUser(AppUser appUser) {
-    return appUserRepository.save(appUser);
+        return appUserRepository.save(appUser);
+    }
+
+    public List<AppUser> getAllUser() {
+        return appUserRepository.fetchAllUser();
     }
 }

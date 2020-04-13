@@ -200,8 +200,8 @@
                         <div class="form-label-group">
                             <input type="text" id="email" class="form-control" th:field="*{email}" placeholder="Email"
                                    required autofocus>
-                            <p id="error-messages" style="display: none"></p>
                             <label for="email">Email</label>
+                            <p id="error-messages" style="display: none"></p>
                         </div>
 
                         <hr>
@@ -235,7 +235,7 @@
 
     function validatePassword() {
         if (password.value != confirmPassword.value) {
-            confirmPassword.setCustomValidity("Passwords Don't Match");
+            confirmPassword.setCustomValidity("Passwords Don't Match.");
         } else {
             confirmPassword.setCustomValidity('');
         }
@@ -243,6 +243,39 @@
 
     password.onchange = validatePassword;
     confirmPassword.onkeyup = validatePassword;
+
+    $(document).ready(function () {
+        console.log("ready");
+
+        $("#email").focusout(function () {
+            let email = $("#email").val();
+
+            axios.get('/check-email?email=' + email)
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+                    let applicationMessage = response.data;
+
+                    if (applicationMessage.success) {
+                        $("#btn-register").attr('disable', false);
+                        $("#error-messages").css('display', 'none');
+
+                    } else {
+                        $("#error-messages").css('display', 'block');
+                        $("#btn-register").attr('disable', true);
+                        $("#error-messages").html("Email already exists.");
+                    }
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+        })
+    })
+
 
 </script>
 

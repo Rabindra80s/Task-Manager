@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "")
+@RequestMapping(value = "/")
 public class HomeController {
 
     @Autowired
@@ -27,17 +27,33 @@ public class HomeController {
 
     @GetMapping(value = "/register")
     public ModelAndView getRegisterPage() {
-        System.out.println("register");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("register");
+        System.out.println("register");
         modelAndView.addObject("appUser", new AppUser());
         return modelAndView;
+    }
+
+    @GetMapping(value = "/check-email")
+    @ResponseBody
+    public ApplicationMessage checkEmail(@RequestParam("email") String email) {
+        ApplicationMessage applicationMessage = new ApplicationMessage();
+        AppUser appUser = appUserService.fetchAppUserByEmail(email);
+
+        if (appUser == null) {
+            applicationMessage.setSuccess(true);
+        } else {
+            applicationMessage.setSuccess(false);
+            applicationMessage.setErrorMessage("Email already exists.");
+        }
+
+        return applicationMessage;
     }
 
     @PostMapping(value = "/register")
     public ApplicationMessage processRegisterPage(@ModelAttribute AppUser appUser) {
         ApplicationMessage applicationMessage = new ApplicationMessage();
-        AppUser fetchedUser = appUserService.fetchAppUserByEmail(appUser.getEmail());
+        AppUser fetchedAppUser = appUserService.fetchAppUserByEmail(appUser.getEmail());
 
         String hashPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
 
@@ -50,6 +66,4 @@ public class HomeController {
 
         return applicationMessage;
     }
-
-
 }
