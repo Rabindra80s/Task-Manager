@@ -66,4 +66,9 @@ public class HomeController {
 
         return applicationMessage;
     }
+
+    @GetMapping(value="/login")
+    public String getLoginPage() {
+        return "login";
+    }
 }
