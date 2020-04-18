@@ -4,9 +4,11 @@ import com.example.TaskManager.common.model.ApplicationMessage;
 import com.example.TaskManager.login.entity.AppUser;
 import com.example.TaskManager.login.service.AppUserService;
 import com.example.TaskManager.task.entity.Task;
+import com.example.TaskManager.task.entity.TaskProjection;
 import com.example.TaskManager.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,6 +68,40 @@ public class AdminController {
         }
 
         return applicationMessage;
+    }
+
+    @GetMapping(value="/tasks")
+    public ModelAndView showTasks(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<TaskProjection>taskList = taskService.fetchAllTasksWithUserInfo();
+
+        String adminEmail = principal.getName();
+
+        modelAndView.setViewName("admin/tasks");
+        modelAndView.addObject("email", adminEmail);
+        modelAndView.addObject("taskList", taskList);
+        modelAndView.addObject("taskSize", taskList.size());
+        System.out.println(taskList.size());
+
+        return modelAndView;
+    }
+
+    @GetMapping(value="/users")
+    public ModelAndView showUsers(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<AppUser>userList = appUserService.getAllUser();
+
+        String adminEmail = principal.getName();
+
+        modelAndView.setViewName("admin/users");
+        modelAndView.addObject("email", adminEmail);
+        modelAndView.addObject("userList", userList);
+        modelAndView.addObject("userSize", userList.size());
+        System.out.println(userList.size());
+
+        return modelAndView;
     }
 
 
