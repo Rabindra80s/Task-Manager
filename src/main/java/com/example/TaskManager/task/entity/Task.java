@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="tbl_user")
+@Table(name="tbl_task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
