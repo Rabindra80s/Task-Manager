@@ -69,10 +69,14 @@
 
 <div class="container">
     <div th:if="${taskSize == 0}">
-        <h3>Sorry! There are no tasks in the database.</h3>
+        <div class="starter-template">
+            <h3 style="text-align: center; padding-top: 5vh;">Sorry! There are no tasks in the database.</h3>
+        </div>
     </div>
     <div th:if="${taskSize > 0}">
-        <h3>List of Tasks</h3>
+        <div class="starter-template">
+            <h3 style="text-align: center; padding-top: 5vh;">List of Tasks</h3>
+        </div>
         <table class="table">
             <thead>
             <tr>

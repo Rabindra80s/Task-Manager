@@ -10,18 +10,27 @@
     <style>
 
         /*BASIC*/
-        html {
-            background-color: #56baed;
-        }
-
         body {
+            background: #fff;
             font-family: "Poppins", sans-serif;
             height: 100vh;
         }
 
+        navbar {
+            min-height: 5rem;
+        }
+
+        @media screen and (max-width: 991px) {
+            .dropdown-menu {
+                position: relative;
+                float: none;
+                width: 1px;
+            }
+        }
+
         a {
             color: #92badd;
-            display: inline-block;
+            display:inline-block;
             text-decoration: none;
             font-weight: 400;
         }
@@ -31,10 +40,11 @@
             font-size: 16px;
             font-weight: 600;
             text-transform: uppercase;
-            display: inline-block;
+            display:inline-block;
             margin: 40px 8px 10px 8px;
             color: #cccccc;
         }
+
 
 
         /*STRUCTURE*/
@@ -58,10 +68,21 @@
             max-width: 450px;
             position: relative;
             padding: 0px;
-            -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-            box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
             text-align: center;
         }
+
+        #formFooter {
+            background-color: #f6f6f6;
+            border-top: 1px solid #dce8f1;
+            padding: 25px;
+            text-align: center;
+            -webkit-border-radius: 0 0 10px 10px;
+            border-radius: 0 0 10px 10px;
+        }
+
+
 
         /*TABS*/
 
@@ -72,6 +93,14 @@
         h2.active {
             color: #0d0d0d;
             border-bottom: 2px solid #5fbae9;
+        }
+
+        #login {
+            margin: 20px 2px;
+        }
+
+        #password {
+            margin: 20px 2px;
         }
 
 
@@ -87,8 +116,8 @@
             display: inline-block;
             text-transform: uppercase;
             font-size: 13px;
-            -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-            box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+            -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+            box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
             -webkit-border-radius: 5px 5px 5px 5px;
             border-radius: 5px 5px 5px 5px;
             margin: 5px 20px 40px 20px;
@@ -141,7 +170,6 @@
             color: #cccccc;
         }
 
-
         /*ANIMATIONS*/
 
         /* Simple CSS3 Fade-in-down Animation */
@@ -181,46 +209,23 @@
         }
 
         /* Simple CSS3 Fade-in Animation */
-        @-webkit-keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @-moz-keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+        @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
         .fadeIn {
-            opacity: 0;
-            -webkit-animation: fadeIn ease-in 1;
-            -moz-animation: fadeIn ease-in 1;
-            animation: fadeIn ease-in 1;
+            opacity:0;
+            -webkit-animation:fadeIn ease-in 1;
+            -moz-animation:fadeIn ease-in 1;
+            animation:fadeIn ease-in 1;
 
-            -webkit-animation-fill-mode: forwards;
-            -moz-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;
+            -webkit-animation-fill-mode:forwards;
+            -moz-animation-fill-mode:forwards;
+            animation-fill-mode:forwards;
 
-            -webkit-animation-duration: 1s;
-            -moz-animation-duration: 1s;
-            animation-duration: 1s;
+            -webkit-animation-duration:1s;
+            -moz-animation-duration:1s;
+            animation-duration:1s;
         }
 
         .fadeIn.first {
@@ -263,9 +268,10 @@
             color: #0d0d0d;
         }
 
-        .underlineHover:hover:after {
+        .underlineHover:hover:after{
             width: 100%;
         }
+
 
 
         /* OTHERS */
@@ -275,7 +281,7 @@
         }
 
         #icon {
-            width: 60%;
+            width:60%;
         }
 
     </style>
@@ -285,8 +291,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Task Management System</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -298,8 +303,7 @@
         </ul>
 
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Register | Login
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -312,12 +316,6 @@
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-        <!-- Tabs Titles -->
-
-        <!-- Icon -->
-        <div class="fadeIn first">
-            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon"/>
-        </div>
 
         <!-- Login Form -->
         <form th:action="@{/login}" method="post">
@@ -325,6 +323,11 @@
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
 
     </div>
 </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Users Page</title>
+    <title>Admin Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -27,6 +27,13 @@
                 float: none;
                 width: 1px;
             }
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-25%, -50%);
         }
     </style>
 </head>
@@ -68,49 +75,22 @@
 </nav>
 
 <div class="container">
-    <div th:if="${userSize == 0}">
-        <div class="starter-template">
-            <h3 style="text-align: center; padding-top: 5vh;">Sorry! There are no users in the database.</h3>
-        </div>
+    <div th:if="${taskAnswerDetail == null}">
+        <h3>Sorry! This task is not found.</h3>
     </div>
-    <div th:if="${userSize > 0}">
-        <div class="starter-template">
-            <h3 style="text-align: center; padding-top: 5vh;">List of Users</h3>
+    <div th:if="${taskAnswerDetail != null}">
+        <div class="card" style="width: 40rem;">
+            <div class="card-body">
+                <h6 class="card-title">Title: <small class="text muted" th:text="${taskAnswerDetail.taskName}"></small></h6>
+                <h6 class="card-subtitle">Submitted By: <small class="text-muted" th:text="${taskAnswerDetail.email}"></small></h6>
+                <br>
+                <p class="card-text" th:text="${taskAnswerDetail.answer}"></p>
+                <p class="card-text">Submitted On: <small class="text-muted" th:text="${taskAnswerDetail.createdAt}"></small></p>
+                <p class="card-text">Updated On: <small class="text-muted" th:text="${taskAnswerDetail.updatedAt}"></small></p>                0
+            </div>
         </div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">S.N.</th>
-                <th scope="col">User Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Address</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Email</th>
-                <th scope="col">role</th>
-                <th scope="col">action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="appUser,iterationStatus : ${userList}">
-                <td th:text="${iterationStatus.count}"></td>
-                <td th:text="${appUser.userId}"></td>
-                <td th:text="${appUser.name}"></td>
-                <td th:text="${appUser.address}"></td>
-                <td th:text="${appUser.phoneNumber}"></td>
-                <td th:text="${appUser.email}"></td>
-                <td th:text="${appUser.role}"></td>
-
-                <td>
-                    <a th:href="@{'/edit-appUser/' + ${appUser.userId}}">Edit</a>
-                    &nbsp; &nbsp; <!-- &nbsp for space -->
-                    <a th:href="@{'/delete-appUser/' + ${appUser.userId}}" onclick="confirmDelete()">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 </div>
-
 
 </body>
 </html>

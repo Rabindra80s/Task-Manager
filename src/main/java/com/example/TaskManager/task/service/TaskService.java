@@ -30,4 +30,8 @@ public class TaskService {
        return taskRepository.fetchTaskByUserId(userId);
    }
 
+    public Task fetchTaskByTaskId(int taskId) {
+        return taskRepository.fetchTaskByTaskId(taskId);
+    }
+
 }

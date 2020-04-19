@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>View Task Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            background: #fff;
+        }
+
+        .navbar {
+            min-height: 5rem;
+        }
+        @media screen and (max-width: 991px) {
+            .dropdown-menu {
+                position: relative;
+                float: none;
+                width: 1px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/user">Task Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/user">Home<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${email}">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" th:href="@{/view-user-profile}">View Profile</a>
+                <a class="dropdown-item" th:href="@{/logout}">Log out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="starter-template">
+        <h3 style="text-align: center; padding-top: 5vh;" th:text="${task.taskName}"></h3>
+    </div>
+    <form>
+        <input type="hidden" id="taskId" th:value="${task.taskId}">
+        <div class="form">
+            <label for="answer">Your answer</label>
+            <div th:if="${taskAnswer == null}">
+                <textarea class="form-control" id="answer" rows="10" cols="80"></textarea>
+            </div>
+            <div th:if="${taskAnswer != null}">
+                <textarea class="form-control" id="answer" rows="10" cols="80" th:text="${taskAnswer.answer}"></textarea>
+            </div>
+
+        </div>
+        <button class="btn btn-primary" id="btn-save-answer" type="submit">Save</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        console.log("ready");
+
+        $("#btn-save-answer").click(function (event) {
+            event.preventDefault();
+
+            let taskId = $("#taskId").val();
+            let answer = $("#answer").val();
+
+            //validate logic
+
+            axios.post('/user/submit-task', {
+                taskId: taskId,
+                answer: answer
+            })
+                .then(function (response) {
+
+                    let applicationMessage = response.data;
+
+                    if (applicationMessage.success) {
+                        alert("Successfully saved");
+                        window.location = "/user/";
+                    } else {
+                        alert(applicationMessage.errormessage());
+                    }
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        })
+
+    });
+</script>
+
+</body>
+</html>

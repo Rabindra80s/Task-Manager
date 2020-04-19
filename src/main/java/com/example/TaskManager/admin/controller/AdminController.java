@@ -4,7 +4,10 @@ import com.example.TaskManager.common.model.ApplicationMessage;
 import com.example.TaskManager.login.entity.AppUser;
 import com.example.TaskManager.login.service.AppUserService;
 import com.example.TaskManager.task.entity.Task;
+import com.example.TaskManager.task.entity.TaskAnswer;
+import com.example.TaskManager.task.entity.TaskAnswerProjection;
 import com.example.TaskManager.task.entity.TaskProjection;
+import com.example.TaskManager.task.service.TaskAnswerService;
 import com.example.TaskManager.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,9 @@ public class AdminController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private TaskAnswerService taskAnswerService;
 
     @GetMapping(value = "")
     public ModelAndView showAdminPage(Principal principal) {
@@ -100,6 +106,21 @@ public class AdminController {
         modelAndView.addObject("userList", userList);
         modelAndView.addObject("userSize", userList.size());
         System.out.println(userList.size());
+
+        return modelAndView;
+    }
+
+    @GetMapping(value="/view-task-detail/{taskId}")
+    public ModelAndView showViewTaskDetailsPage(@PathVariable int taskId, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        String adminEmail = principal.getName();
+
+        TaskAnswerProjection fetchedTaskAnswer = taskAnswerService.fetchTaskAnswer(taskId);
+
+        modelAndView.setViewName("admin/view-task-detail");
+        modelAndView.addObject("email", adminEmail);
+        modelAndView.addObject("taskAnswerDetail", fetchedTaskAnswer);
 
         return modelAndView;
     }

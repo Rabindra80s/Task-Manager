@@ -59,10 +59,13 @@
 
 <div class="container">
     <div th:if="${taskSize == 0}">
-        <h3>Sorry! There are no tasks assigned to you.</h3>
-    </div>
+        <div class="starter-template">
+            <h3 style="text-align: center; padding-top: 5vh;">Sorry! There are no tasks assigned to you.</h3>
+        </div>    </div>
     <div th:if="${taskSize > 0}">
-        <h3>Your Tasks</h3>
+        <div class="starter-template">
+            <h3 style="text-align: center; padding-top: 5vh;">Your tasks</h3>
+        </div>
         <table class="table">
             <thead>
             <tr>
